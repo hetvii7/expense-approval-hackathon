@@ -32,11 +32,15 @@ if role == "Employee":
         submit = st.form_submit_button("Submit Expense")
 
     if submit:
-        expense = {
-            "id": len(expenses)+1,
-            "employee": role,
-            "amount": amount,
-            "currency": currency,
-            "category": category,
-            "description": description,
-            "date": submit
+   expense = {
+    "id": len(expenses)+1,
+    "employee": role,
+    "amount": amount,
+    "currency": currency,
+    "category": category,
+    "description": description,
+    "date": submitted_date,
+    "state": "To Approve",
+    "next_approver_index": 0,
+    "approvals": []
+}  # <- Make sure this closing } exists
