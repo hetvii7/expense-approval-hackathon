@@ -1,0 +1,57 @@
+<odoo>
+  <record id="view_expense_tree" model="ir.ui.view">
+    <field name="name">expense.request.tree</field>
+    <field name="model">expense.request</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="employee_id"/>
+        <field name="amount"/>
+        <field name="currency_id"/>
+        <field name="state"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_expense_form" model="ir.ui.view">
+    <field name="name">expense.request.form</field>
+    <field name="model">expense.request</field>
+    <field name="arch" type="xml">
+      <form string="Expense Request">
+        <header>
+          <button name="action_submit" type="object" string="Submit" attrs="{'invisible':[('state','!=','draft')]}"/>
+          <button name="action_approve" type="object" string="Approve" attrs="{'invisible':[('state','!=','to_approve')]}"/>
+          <button name="action_reject" type="object" string="Reject" attrs="{'invisible':[('state','!=','to_approve')]}"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="employee_id"/>
+            <field name="user_id"/>
+            <field name="amount"/>
+            <field name="currency_id"/>
+            <field name="company_currency_amount" readonly="1"/>
+            <field name="date"/>
+            <field name="category"/>
+            <field name="description"/>
+          </group>
+          <group>
+            <field name="approver_line_ids">
+              <tree editable="bottom">
+                <field name="approver_id"/>
+                <field name="sequence"/>
+                <field name="approved"/>
+                <field name="comment"/>
+              </tree>
+            </field>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <menuitem id="menu_hr_root" name="HR" sequence="10"/>
+  <menuitem id="menu_expense_root" parent="menu_hr_root" name="Expenses" sequence="10"/>
+  <act_window id="action_expense_requests" name="Expense Requests" res_model="expense.request" view_mode="tree,form" menu_id="menu_expense_root"/>
+</odoo>
